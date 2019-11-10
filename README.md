@@ -7,3 +7,5 @@ Memory cache is fast as it is on the server.
 Distributed cache is great as it is shared between servers, but it is slower.
 
 This code shows you how you can combine those two to get besto of both worlds.
+
+There is a blog post I wrote explaining in more details https://dev.to/nikolicbojan/memory-distributed-caching-in-net-core-5hm3
