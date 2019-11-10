@@ -69,10 +69,17 @@ namespace Svea.Eureka.Services.Location.Infrastructure.Services.Cache
             var item = await factory.Invoke();
             if (item != null)
             {
-                var cacheEntryOptions = new DistributedCacheEntryOptions { AbsoluteExpirationRelativeToNow = calculatedDistributedCacheExpiration };
-                var serializedValue = converter.Serialize(item);
-                await _distributedCache.SetStringAsync(generatedKey, serializedValue, cacheEntryOptions, CancellationToken.None);
-                _logger.LogDebug("Stored in Distributed cache for key {Key}", generatedKey);
+                try
+                {
+                    var cacheEntryOptions = new DistributedCacheEntryOptions { AbsoluteExpirationRelativeToNow = calculatedDistributedCacheExpiration };
+                    var serializedValue = converter.Serialize(item);
+                    await _distributedCache.SetStringAsync(generatedKey, serializedValue, cacheEntryOptions, CancellationToken.None);
+                    _logger.LogDebug("Stored in Distributed cache for key {Key}", generatedKey);
+                }
+                catch (Exception e)
+                {
+                    _logger.LogWarning(e, "Exception storing cached item in Distributed cache.");
+                }                
             }
             
             return item;
