@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json;
 
 namespace Svea.Eureka.Services.Location.Infrastructure.Services.Cache
 {
@@ -10,7 +10,7 @@ namespace Svea.Eureka.Services.Location.Infrastructure.Services.Cache
 
             if (value != null)
             {
-                result = JsonConvert.DeserializeObject<T>(value);
+                result = JsonSerializer.Deserialize<T>(value);
             }
 
             return result;
@@ -18,7 +18,7 @@ namespace Svea.Eureka.Services.Location.Infrastructure.Services.Cache
 
         public string Serialize(object obj)
         {
-            return JsonConvert.SerializeObject(obj);
+            return JsonSerializer.Serialize(obj);
         }
     }
 }
